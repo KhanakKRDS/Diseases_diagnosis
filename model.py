@@ -116,7 +116,6 @@ for epoch in range(num_epochs):
 model.eval()
 correct = 0
 total = 0
-
 with torch.no_grad(): #no need to compute gradients during validation
     for images, labels in val_loader: #iterate through validation data
         images, labels = images.to(device), labels.to(device)
