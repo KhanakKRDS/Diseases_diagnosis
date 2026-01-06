@@ -16,11 +16,25 @@
 <div id = "main">
     <h1> AI X-rayScan  </h1>
 
-    <label for = "x_ray">Upload an X-ray image</label>
+    <label for = "x_ray">Upload an X-ray image</label> 
+    <br><br>
     <!-- image/* = JPEG, PNG, GIF, WebP -->
     <input type = "file" id = "x_ray" name = "x_ray" accept="image/*">
-    <button onclick = "alert('file')">
 </div>
-</body>
 
+<!-- able to preview the uploaded image -->
+<div id = "imagePreview">
+    <img src="#" alt="Image Preview" class="image-preview">
+    <p> Your Uploaded image will appear here </p>
+</div>
+
+<script>
+    document .getElementById('x_ray').addEventListener('change', function(event) {
+        const [file] = event.target.files; //get the first file
+        const previewImage =document.querySelector('.image-preview'); //selecting image
+
+    });
+</script>
+
+</body>
 </html>
