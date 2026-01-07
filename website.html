@@ -34,24 +34,13 @@
         const previewText = document.querySelector('#imagePreview p'); //selecting text for preview
 
         if(file){
-            const reader = newFileReader();// create new file reader 
-            reader.onload = function(e){
-                previewImage.src = e.target.result;
-                previewImage.style.display = 'block'; // make the image visible
-                if (previewText){
-                    previewText.style.display = 'none'; // text not visible if image is visible
-                }
-            };
-
-            reader.readAsDataURL(file); // read the file as a data readAsDataURL
-        } else{
-            previewImage.src = "";
-            previewImage.style.display = 'none'; // hide if there is noe image
-            if (previewText){
-                    previewText.style.display = 'block'; // text visible if no image
-                }
+            
+            x_ray.src = URL.createObjectURL(event.target.files[0]);
+            x_ray.onload = function(){
+            URL.revokeObjectURL(x_ray.src)
         }
-    });
+    }
+});
 </script>
 
 </body>
