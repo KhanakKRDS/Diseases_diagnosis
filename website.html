@@ -14,7 +14,7 @@
 </div>
 
 <div id = "main">
-    <h1> AI X-rayScan  </h1>
+    <h1> AI  X-rayScan  </h1>
 
     <label for = "x_ray">Upload an X-ray image</label> 
     <br><br>
@@ -25,14 +25,32 @@
 <!-- able to preview the uploaded image -->
 <div id = "imagePreview">
     <img src="#" alt="Image Preview" class="image-preview">
-    <p> Your Uploaded image will appear here </p>
 </div>
 
 <script>
     document .getElementById('x_ray').addEventListener('change', function(event) {
         const [file] = event.target.files; //get the first file
-        const previewImage =document.querySelector('.image-preview'); //selecting image
+        const previewImage = document.querySelector('.image-preview'); //selecting image for preview
+        const previewText = document.querySelector('#imagePreview p'); //selecting text for preview
 
+        if(file){
+            const reader = newFileReader();// create new file reader 
+            reader.onload = function(e){
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block'; // make the image visible
+                if (previewText){
+                    previewText.style.display = 'none'; // text not visible if image is visible
+                }
+            };
+
+            reader.readAsDataURL(file); // read the file as a data readAsDataURL
+        } else{
+            previewImage.src = "";
+            previewImage.style.display = 'none'; // hide if there is noe image
+            if (previewText){
+                    previewText.style.display = 'block'; // text visible if no image
+                }
+        }
     });
 </script>
 
