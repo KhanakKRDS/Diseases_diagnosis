@@ -36,7 +36,6 @@
     document .getElementById('x_ray').addEventListener('change', function(event) {
         const file = event.target.files[0]; //get the first file
         const previewImage = document.querySelector('.image-preview'); //selecting image for preview
-        //const previewText = document.querySelector('#imagePreview p'); //selecting text for preview
 
         if(file){
             previewImage.src = URL.createObjectURL(event.target.files[0]);
