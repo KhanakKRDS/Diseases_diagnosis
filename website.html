@@ -2,6 +2,11 @@
 <html>
 <head> 
     <style>
+        .image-preview{
+            max-width: 300px;
+            margin-top: 20px;
+            display: none;
+        }
     </style>
 </head>
 
@@ -29,15 +34,15 @@
 
 <script>
     document .getElementById('x_ray').addEventListener('change', function(event) {
-        const [file] = event.target.files; //get the first file
+        const file = event.target.files[0]; //get the first file
         const previewImage = document.querySelector('.image-preview'); //selecting image for preview
-        const previewText = document.querySelector('#imagePreview p'); //selecting text for preview
+        //const previewText = document.querySelector('#imagePreview p'); //selecting text for preview
 
         if(file){
-            
-            x_ray.src = URL.createObjectURL(event.target.files[0]);
-            x_ray.onload = function(){
-            URL.revokeObjectURL(x_ray.src)
+            previewImage.src = URL.createObjectURL(event.target.files[0]);
+            previewImage.style.display = 'block'; // make the image visible
+            previewImage.onload = function(){
+                URL.revokeObjectURL(previewImage.src)
         }
     }
 });
