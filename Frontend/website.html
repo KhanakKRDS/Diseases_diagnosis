@@ -30,21 +30,62 @@
 <!-- able to preview the uploaded image -->
 <div id = "imagePreview">
     <img src="#" alt="Image Preview" class="image-preview">
+    <br><br>
+    <input type="button" id="predictButton" value="Predict"> <!-- (x will be changed)submit button to send the image to the backend -->
 </div>
+<p id="result"></p>
 
 <script>
-    document .getElementById('x_ray').addEventListener('change', function(event) {
-        const file = event.target.files[0]; //get the first file
+        const fileInput = document.getElementById('x_ray'); //selecting file input
         const previewImage = document.querySelector('.image-preview'); //selecting image for preview
+        const predictButton = document.getElementById('predictButton'); //selecting predict button
+        const resultText = document.getElementById('result');//selecting result paragraph
 
-        if(file){
-            previewImage.src = URL.createObjectURL(event.target.files[0]);
-            previewImage.style.display = 'block'; // make the image visible
-            previewImage.onload = function(){
-                URL.revokeObjectURL(previewImage.src)
+        fileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0]; //get the first file
+
+            if(file){
+                previewImage.src = URL.createObjectURL(event.target.files[0]);
+                previewImage.style.display = 'block'; // make the image visible
+                previewImage.onload = function(){
+                    URL.revokeObjectURL(previewImage.src)
+            }
         }
-    }
-});
+        });
+
+        //function to handle when predict button is clicked
+        predictButton.addEventListener('click', async function() {
+            const file = fileInput.files[0];
+
+            //check if a file is selected
+            if(!file){
+                alert("Please upload an image first.");
+                return;
+            } 
+
+            //call the function to send the image to backend
+            const formData = new FormData();
+            formData.append('x_ray', file);
+
+            resultText.textContent = "Predicting..."; //show predicting message
+
+            //send the image to backend using fetch API
+            try{
+                const response = await fetch('http://127.0.0.1:8000/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                //check if the response is ok
+                const data = await response.json();
+                resultText.textContent = "Prediction: " + data.prediction;
+            
+            //catch any errors
+            }catch(error){
+                console.error('Error:', error);
+                resultText.textContent = "An error occurred during prediction.";
+            }
+        });
 </script>
 
 </body>
