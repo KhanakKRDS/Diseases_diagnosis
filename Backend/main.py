@@ -5,7 +5,7 @@ from torchvision import transforms
 from PIL import Image   
 import io
 
-from model import DiseaseDiagnosisModel, device, num_classes
+from .model import DiseaseDiagnosisModel, device, num_classes
 app = FastAPI(title= "AI X-rayScan API")
 
 # Enable CORS for all origins (for development purposes)
