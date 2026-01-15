@@ -1,67 +1,140 @@
 <!DOCTYPE html>
 <html>
-<head> 
+
+<head>
     <style>
-        .image-preview{
+        .image-preview {
             max-width: 300px;
             margin-top: 20px;
             display: none;
+        }
+
+        .navbar {
+            /*side nvigation bar*/
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            /*stay on top*/
+            top: 0;
+            left: 0;
+            background-color: aquamarine;
+            overflow-x: hidden;
+            /*disable horiontal scroll*/
+            padding-top: 60px;
+            transition: 0.5s;
+        }
+
+        .navbar a {
+            /*navbar links*/
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: beige;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .navbar a:hover {
+            /*when the mouse is on links, change color*/
+            color: black;
+        }
+
+        .navbar .closeButton {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        .span {
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        #main {
+            /*moving the info when navbar is open*/
+            transition: margin-left .5s;
+            padding: 20px;
+        }
+
+        @media screen and (max-height: 450px) {
+            .navbar {
+                padding-top: 15px;
+            }
+
+            .navbar a {
+                font-size: 18px;
+            }
         }
     </style>
 </head>
 
 <body>
-<div>
-    <nav class = "navbar">
-        <ul>
-            <li><a href = "website.html"> Home </a></li>
-        </ul>
-</div>
+    <div>
+        <nav id="sideNavbar" class="navbar">
+            <a href="javascript:void(0)" class="closeButton" onclick="closeNav()"> &times; </a>
+            <a href="website.html"> Home </a>
+            <a href="website.html"> Information </a>
+            <a href="website.html"> Diet </a>
+    </div>
 
-<div id = "main">
-    <h1> AI  X-rayScan  </h1>
+    <span onclick="openNav()"> </span>
 
-    <label for = "x_ray">Upload an X-ray image</label> 
-    <br><br>
-    <!-- image/* = JPEG, PNG, GIF, WebP -->
-    <input type = "file" id = "x_ray" name = "x_ray" accept="image/*">
-</div>
+    <div id="main">
+        <h1> AI X-rayScan </h1>
 
-<!-- able to preview the uploaded image -->
-<div id = "imagePreview">
-    <img src="#" alt="Image Preview" class="image-preview">
-    <br><br>
-    <input type="button" id="predictButton" value="Predict"> <!-- (x will be changed)submit button to send the image to the backend -->
-</div>
-<p id="result"></p>
+        <label for="x_ray">Upload an X-ray image</label>
+        <br><br>
+        <!-- image/* = JPEG, PNG, GIF, WebP -->
+        <input type="file" id="x_ray" name="x_ray" accept="image/*">
+    </div>
 
-<script>
+    <!-- able to preview the uploaded image -->
+    <div id="imagePreview">
+        <img src="#" alt="Image Preview" class="image-preview">
+        <br><br>
+        <input type="button" id="predictButton" value="Predict">
+        <!-- (x will be changed)submit button to send the image to the backend -->
+    </div>
+    <p id="result"></p>
+
+    <script>
+
+        function openNav(){
+            document.getElementById("sideNavbar").style.width = "250px";
+        }
+        function closeNav(){
+            document.getElementById("sideNavbar").style.width = "0";
+        }
+
         const fileInput = document.getElementById('x_ray'); //selecting file input
         const previewImage = document.querySelector('.image-preview'); //selecting image for preview
         const predictButton = document.getElementById('predictButton'); //selecting predict button
         const resultText = document.getElementById('result');//selecting result paragraph
 
-        fileInput.addEventListener('change', function(event) {
+        fileInput.addEventListener('change', function (event) {
             const file = event.target.files[0]; //get the first file
 
-            if(file){
+            if (file) {
                 previewImage.src = URL.createObjectURL(event.target.files[0]);
                 previewImage.style.display = 'block'; // make the image visible
-                previewImage.onload = function(){
+                previewImage.onload = function () {
                     URL.revokeObjectURL(previewImage.src)
+                }
             }
-        }
         });
 
         //function to handle when predict button is clicked
-        predictButton.addEventListener('click', async function() {
+        predictButton.addEventListener('click', async function () {
             const file = fileInput.files[0];
 
             //check if a file is selected
-            if(!file){
+            if (!file) {
                 alert("Please upload an image first.");
                 return;
-            } 
+            }
 
             //call the function to send the image to backend
             const formData = new FormData();
@@ -70,7 +143,7 @@
             resultText.textContent = "Predicting..."; //show predicting message
 
             //send the image to backend using fetch API
-            try{
+            try {
                 const response = await fetch('http://127.0.0.1:8000/predict', {
                     method: 'POST',
                     body: formData
@@ -79,14 +152,15 @@
                 //check if the response is ok
                 const data = await response.json();
                 resultText.textContent = "Prediction: " + data.prediction;
-            
-            //catch any errors
-            }catch(error){
+
+                //catch any errors
+            } catch (error) {
                 console.error('Error:', error);
                 resultText.textContent = "An error occurred during prediction.";
             }
         });
-</script>
+    </script>
 
 </body>
+
 </html>
