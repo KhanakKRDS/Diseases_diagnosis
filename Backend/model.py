@@ -8,7 +8,7 @@ import os # Operating system interfaces (File paths, directory management)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 #directory
-data_dir = "Dataset" #path to the dataset
+data_dir = os.path.join(os.path.dirname(__file__), "..", "..", "Dataset") #path to the dataset
 train_dir = os.path.join(data_dir, "train") #training images
 val_dir = os.path.join(data_dir, "validation") #validation images
 test_dir = os.path.join(data_dir, "test") #testing images
