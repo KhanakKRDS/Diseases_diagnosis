@@ -52,6 +52,12 @@ async def predict_disease(file: UploadFile = File(...)):
 
     return {"prediction": predicted_class} # Return the predicted class as JSON response
 
+@app.get("/")
+async def root():
+    from fastapi.responses import FileResponse
+    frontend_path = os.path.join(os.path.dirname(__file__), "..", "Frontend", "website.html")
+    return FileResponse(frontend_path)
+
 # Serve static files (Frontend) - MUST be after API routes
 frontend_path = os.path.join(os.path.dirname(__file__), "..", "Frontend")
-app.mount("/", StaticFiles(directory=frontend_path, html=True), name="static")
+app.mount("/", StaticFiles(directory=frontend_path, html=True, check_dir=True), name="static")
