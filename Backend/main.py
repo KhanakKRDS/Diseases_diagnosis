@@ -7,7 +7,7 @@ from PIL import Image
 import io
 import os
 
-from .model import DiseaseDiagnosisModel, device, num_classes
+from .model import DiseaseDiagnosisModel, device
 app = FastAPI(title= "AI X-rayScan API")
 
 # Enable CORS for all origins (for development purposes)
@@ -19,16 +19,12 @@ app.add_middleware(
     allow_headers=["*"],  # Allow all headers
 )
 
-# Serve static files (Frontend)
-frontend_path = os.path.join(os.path.dirname(__file__), "..", "Frontend")
-app.mount("/", StaticFiles(directory=frontend_path, html=True), name="static")
-
 # Load the trained model
 class_names = ['Normal', 'Pneumonia', 'Tuberculosis']  # Example class names
 num_classes = len(class_names)
 
 model = DiseaseDiagnosisModel(num_classes)
-model_path = os.path.join(os.path.dirname(__file__), "xray_cnn_model.pth")
+model_path = os.path.join(os.path.dirname(__file__),"..", "xray_cnn_model.pth")
 model.load_state_dict(torch.load(model_path, map_location=device))
 model.to(device)    
 model.eval()  # Set the model to evaluation mode
@@ -56,3 +52,6 @@ async def predict_disease(file: UploadFile = File(...)):
 
     return {"prediction": predicted_class} # Return the predicted class as JSON response
 
+# Serve static files (Frontend) - MUST be after API routes
+frontend_path = os.path.join(os.path.dirname(__file__), "..", "Frontend")
+app.mount("/", StaticFiles(directory=frontend_path, html=True), name="static")
