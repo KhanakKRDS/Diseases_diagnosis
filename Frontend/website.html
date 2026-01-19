@@ -3,14 +3,16 @@
 
 <head>
 
-    <link rel="icon" type="image/jpeg" href="../Diseases_diagnosis/x-ray-favicon.jpg">
+    <link rel="icon" type="image/jpeg" href="/static/x-ray-favicon.jpg">
 
     <style>
         body{
-            background-image:url("../Diseases_diagnosis/bg.jpg"); 
-            background-size: cover;
-	        background-repeat:no-repeat;  
-        }
+            
+            background-color: rgb(193, 222, 252);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: rgb(12, 83, 189);        }
 
         .image-preview {
             max-width: 300px;
@@ -25,7 +27,7 @@
             z-index: 1; /*stay on top*/
             top: 0;
             left: 0;
-            background-color: rgb(179, 236, 234);
+            background-color: rgb(180, 221, 255);
             overflow-x: hidden; /*disable horiontal scroll*/
             padding-top: 60px;
             transition: 0.5s;
@@ -56,16 +58,19 @@
             transition: margin-left .5s;
             padding: 20px;
             font-size: 30px;
+            color: #000000;
         }
 
         h1{ /*(class selector)*/
             text-align: center;
             font-size: 50px ;
-            color: rgb(179, 236, 234);
+            color: rgb(0, 0, 0);
         }
 
         input{
             font-size: 15px;
+            color: #040404;
+    
         }
 
         #predictButton{

@@ -19,6 +19,10 @@ app.add_middleware(
     allow_headers=["*"],  # Allow all headers
 )
 
+# Mount static files (images, css, etc.)
+static_dir = os.path.join(os.path.dirname(__file__), "..")
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
+
 # Load the trained model
 class_names = ['Normal', 'Pneumonia', 'Tuberculosis']  # Example class names
 num_classes = len(class_names)
