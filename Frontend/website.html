@@ -8,7 +8,7 @@
     <style>
         body{
             
-            background-color: rgb(193, 222, 252);
+            background-color: rgb(220, 247, 255);
             margin: 0;
             padding: 0;
             min-height: 100vh;
@@ -37,7 +37,7 @@
             padding: 8px 8px 8px 32px;
             text-decoration: none;
             font-size: 25px;
-            color: rgb(9, 54, 121);
+            color: rgb(20, 9, 121);
             display: block;
             transition: 0.3s;
         }
@@ -83,16 +83,26 @@
 
             .navbar a {font-size: 18px;}
         }
+
+        .image-preview{
+            padding-left: 50px;
+        }
+
+        .resultText.textContent{
+            margin-left: 50px;
+            font-size: 30px;
+        }
+
     </style>
 </head>
 
 <body>
-    <span style="font-size: 30px; cursor:pointer" onclick="openNav()">&#9776;</span>
+    <span style="font-size: 40px; margin-left: 30px; cursor:pointer " onclick="openNav()">&#9776;</span>
 
     <div id="sideNavbar" class="navbar">
             <a href="javascript:void(0)" class="closeButton" onclick="closeNav()"> &times; </a>
             <a href="website.html"> Home </a>
-            <a href="website.html"> Information </a>
+            <a href="info.html"> Information </a>
             <a href="website.html"> Diet </a>
     </div>
 
