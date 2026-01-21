@@ -6,13 +6,14 @@
     <link rel="icon" type="image/jpeg" href="/static/x-ray-favicon.jpg">
 
     <style>
-        body{
-            
+        body {
+
             background-color: rgb(232, 250, 255);
             margin: 0;
             padding: 0;
             min-height: 100vh;
-            color: rgb(12, 83, 189);        }
+            color: rgb(12, 83, 189);
+        }
 
         .image-preview {
             max-width: 300px;
@@ -20,20 +21,24 @@
             display: none;
         }
 
-        .navbar { /*side nvigation bar*/
+        .navbar {
+            /*side nvigation bar*/
             height: 100%;
             width: 0;
             position: fixed;
-            z-index: 1; /*stay on top*/
+            z-index: 1;
+            /*stay on top*/
             top: 0;
             left: 0;
             background-color: rgb(180, 221, 255);
-            overflow-x: hidden; /*disable horiontal scroll*/
+            overflow-x: hidden;
+            /*disable horiontal scroll*/
             padding-top: 60px;
             transition: 0.5s;
         }
 
-        .navbar a { /*navbar links*/
+        .navbar a {
+            /*navbar links*/
             padding: 8px 8px 8px 32px;
             text-decoration: none;
             font-size: 25px;
@@ -42,7 +47,8 @@
             transition: 0.3s;
         }
 
-        .navbar a:hover { /*when the mouse is on links, change color*/
+        .navbar a:hover {
+            /*when the mouse is on links, change color*/
             color: rgb(243, 241, 241);
         }
 
@@ -54,76 +60,127 @@
             margin-left: 50px;
         }
 
-        #main { /*moving the info when navbar is open (ID selector)*/
+        #main {
+            /*moving the info when navbar is open (ID selector)*/
             transition: margin-left .5s;
             padding: 20px;
             font-size: 30px;
             color: #000000;
         }
 
-        h1{ /*(class selector)*/
-            text-align: center;
-            font-size: 50px ;
-            color: rgb(0, 0, 0);
+        h1 {
+            /*(class selector)*/
+            display: block;
+            margin: auto;
+            width: 50%;
+
         }
 
-        input{
+        input {
             font-size: 15px;
             color: #040404;
         }
 
-        #predictButton{
+        #predictButton {
             position: relative;
             left: 20px;
         }
 
         @media screen and (max-height: 450px) {
-            .navbar {padding-top: 15px;}
+            .navbar {
+                padding-top: 15px;
+            }
 
-            .navbar a {font-size: 18px;}
+            .navbar a {
+                font-size: 18px;
+            }
         }
 
-        .image-preview{
+        .image-preview {
             padding-left: 50px;
         }
 
-        .resultText.textContent{
+        .resultText.textContent {
             margin-left: 50px;
             font-size: 30px;
+        }
+
+        label {
+            color: rgb(66, 167, 250);
+            text-align: center;
+        }
+
+        #main{
+            display:flex;
+            justify-content: center; /*in middle horizontally*/
+            align-items: center;/*in middle vertically*/
+            height:10vh;
+            width: 100%; 
+        }
+        #imagePreview{
+            display:flex;
+            justify-content: center; /*in middle horizontally*/
+            align-items: center;/*in middle vertically*/
+            height:10vh;
+            width: 100%; 
+        }
+        #choose{
+            display:flex;
+            justify-content: center; /*in middle horizontally*/
+            align-items: center;/*in middle vertically*/
+            height:10vh;
+            width: 100%; 
+        }
+        #predict{
+            display:flex;
+            justify-content: center; /*in middle horizontally*/
+            align-items: center;/*in middle vertically*/
+            height:10vh;
+            width: 100%; 
         }
 
     </style>
 </head>
 
 <body>
-    <span style="font-size: 40px; margin-left: 30px; cursor:pointer " onclick="openNav()">&#9776;</span>
+    <span style="font-size: 60px; margin-left: 30px; cursor:pointer " onclick="openNav()">&#9776;</span>
 
     <div id="sideNavbar" class="navbar">
-            <a href="javascript:void(0)" class="closeButton" onclick="closeNav()"> &times; </a>
-            <a href="website.html"> Home </a>
-            <a href="info.html"> Information </a>
-            <a href="diet.html"> Diet </a>
+        <a href="javascript:void(0)" class="closeButton" onclick="closeNav()"> &times; </a>
+        <a href="website.html"> Home </a>
+        <a href="info.html"> Information </a>
+        <a href="diet.html"> Diet </a>
     </div>
 
     <span onclick="openNav()"></span>
 
-    <div id="main">
-        <h1> AI  X-rayScan </h1>
+     <!-- <h1> AI X-rayScan </h1>-->
+     <h1><img src="/static/title_crop.png" alt="Description of image" class="heading-image"></h1>
+     
+    <div id="class_container">
+        <div id="main">
 
-        <label for="x_ray">Upload an X-ray image</label>
-        <br><br>
-        <!-- image/* = JPEG, PNG, GIF, WebP -->
-        <input type="file" id="x_ray" name="x_ray" accept="image/*">
-    </div>
+            <label for="x_ray">Upload an X-ray image</label>
+        </div>
 
-    <!-- able to preview the uploaded image -->
-    <div id="imagePreview">
-        <img src="#" alt="Image Preview" class="image-preview">
-        <br><br>
-        <input type="button" id="predictButton" value="Predict">
-        <!-- (x will be changed)submit button to send the image to the backend -->
+        <div id="choose">
+            <!-- image/* = JPEG, PNG, GIF, WebP -->
+            <input type="file" id="x_ray" name="x_ray" accept="image/*">   
+        </div>
+
+        <!-- able to preview the uploaded image -->
+        <div id="imagePreview">
+            <img src="#" alt="Image Preview" class="image-preview">
+            <br>
+        </div>
+
+        <div id="predict">
+            <input type="button" id="predictButton" value="Predict">
+            <!-- (x will be changed)submit button to send the image to the backend -->
+            <br>
+            <p id="result"></p>
+        </div>
     </div>
-    <p id="result"></p>
 
     <script>
 
