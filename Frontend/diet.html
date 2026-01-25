@@ -6,88 +6,135 @@
     <link rel="icon" type="image/jpeg" href="/static/x-ray-favicon.jpg">
 
     <style>
-        body{
-            
-            background-color: rgb(232, 250, 255);
+        * {
             margin: 0;
             padding: 0;
-            min-height: 100vh;
-            color: rgb(12, 83, 189);        }
-
-        .image-preview {
-            max-width: 300px;
-            margin-top: 20px;
-            display: none;
+            box-sizing: border-box;
         }
 
-        .navbar { /*side nvigation bar*/
+        body {
+            background: linear-gradient(135deg, #e8faff 0%, #f0f9ff 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: rgb(12, 83, 189);
+            min-height: 100vh;
+            padding-top: 20px;
+        }
+
+        .navbar {
             height: 100%;
             width: 0;
             position: fixed;
-            z-index: 1; /*stay on top*/
+            z-index: 1;
             top: 0;
             left: 0;
-            background-color: rgb(180, 221, 255);
-            overflow-x: hidden; /*disable horiontal scroll*/
+            background: linear-gradient(180deg, rgb(180, 221, 255) 0%, rgb(150, 200, 255) 100%);
+            overflow-x: hidden;
             padding-top: 60px;
             transition: 0.5s;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        .navbar a { /*navbar links*/
-            padding: 8px 8px 8px 32px;
+        .navbar a {
+            padding: 12px 32px;
             text-decoration: none;
-            font-size: 25px;
+            font-size: 18px;
             color: rgb(20, 9, 121);
             display: block;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            font-weight: 500;
         }
 
-        .navbar a:hover { /*when the mouse is on links, change color*/
-            color: rgb(243, 241, 241);
+        .navbar a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding-left: 40px;
         }
 
         .navbar .closeButton {
             position: absolute;
-            top: 0;
+            top: 15px;
             right: 25px;
-            font-size: 36px;
-            margin-left: 50px;
+            font-size: 32px;
+            cursor: pointer;
+            color: rgb(20, 9, 121);
+            transition: all 0.3s ease;
         }
 
-        #main { /*moving the info when navbar is open (ID selector)*/
-            transition: margin-left .5s;
-            padding: 20px;
-            font-size: 30px;
-            color: #000000;
+        .navbar .closeButton:hover {
+            transform: scale(1.2);
+        }
+
+        #menuButton {
+            font-size: 28px;
+            margin-left: 30px;
+            cursor: pointer;
+            color: rgb(12, 83, 189);
+            transition: all 0.3s ease;
+            font-weight: 300;
+        }
+
+        #menuButton:hover {
+            transform: scale(1.1);
         }
 
         @media screen and (max-height: 450px) {
-            .navbar {padding-top: 15px;}
-
-            .navbar a {font-size: 18px;}
+            .navbar {
+                padding-top: 15px;
+            }
+            .navbar a {
+                font-size: 16px;
+            }
         }
 
-        #pneumonia_diet{
-        text-align: left;
-        padding-left: 30px;
-        padding-top: 30px;
+        h1 {
+            color: rgb(12, 83, 189);
+            font-size: 28px;
+            margin-bottom: 20px;
         }
 
-        #tubercluosis_diet{
-        text-align: left;
-        padding-left: 30px;
-        padding-top: 30px;
+        h2 {
+            color: rgb(12, 83, 189);
+            font-size: 20px;
+            margin-top: 20px;
+            margin-bottom: 10px;
         }
 
         li {
-        font-size: 20px;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 8px;
         }
 
+        .info-container {
+            display: flex;
+            gap: 40px;
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .info-column {
+            width: 50%;
+            background-color: rgb(240, 250, 255);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        @media (max-width: 768px) {
+            .info-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .info-column {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <span style="font-size: 60px; margin-left: 30px; cursor:pointer " onclick="openNav()">&#9776;</span>
+    <span style="font-size: 60px; margin-left: 30px; cursor:pointer" id="menuButton" onclick="openNav()">&#9776;</span>
 
     <div id="sideNavbar" class="navbar">
             <a href="javascript:void(0)" class="closeButton" onclick="closeNav()"> &times; </a>
@@ -96,8 +143,9 @@
             <a href="diet.html"> Diet </a>
     </div>
 
-    <div id="pneumonia_diet" class=" p_diet">
-        <h1> Pneumonia:</h1>
+    <div id="diet_info" class="info-container">
+        <div id="pneumonia_diet" class="info-column">
+            <h1> Pneumonia:</h1>
         <h2> Key Nutrients</h2>
         <ul>
             <li>Fluids</li>
@@ -123,8 +171,8 @@
         </ul>
     </div>
 
-    <div id="tubercluosis_diet" class=" tb_diet">
-        <h1> Tubercluosis(TB):</h1>
+        <div id="tubercluosis_diet" class="info-column">
+            <h1> Tubercluosis(TB):</h1>
         <h2> Key Nutrients</h2>
         <ul>
             <li>High protein (eggs, meat, dairy, beans)</li>
@@ -147,6 +195,7 @@
             <li>Long-term nutrition</li>
             <li>High protein</li>
         </ul>
+        </div>
     </div>
 
     <span onclick="openNav()"></span>

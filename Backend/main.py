@@ -33,10 +33,10 @@ model.load_state_dict(torch.load(model_path, map_location=device))
 model.to(device)    
 model.eval()  # Set the model to evaluation mode
 
-transform = transforms.Compose([
+transform = transforms.Compose([ # Image transformations for preprocessing
     transforms.Resize((128, 128)),      
-    transforms.Grayscale(num_output_channels=3),  
-    transforms.ToTensor(),
+    transforms.Grayscale(num_output_channels=3),  #x-rays are grayscale
+    transforms.ToTensor(), #convert images to PyTorch tensors
 ])
 
 @app.post("/predict/")
