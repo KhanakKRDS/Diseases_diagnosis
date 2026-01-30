@@ -1,7 +1,7 @@
 <h1>AI X-rayScan</h1>
 
 <h3>Overview</h3>
-<p>This is a web-based system designed to assist users in identifying possible diseases based on providing X-ray images. The platform provides an intuitive interface where users can input their X-rays and receive predicted health conditions along with relevant information.
+<p>This is a web-based system designed to assist users in identifying possible diseases based on provided X-ray images. The platform provides an intuitive interface where users can input their X-rays and receive predicted health conditions along with relevant information.
 
 This project aims to demonstrate the practical application of web development concepts in healthcare-related problem solving.</p>
 <br>
