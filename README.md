@@ -7,7 +7,7 @@ This project aims to demonstrate the practical application of web development co
 <br>
 
 <h3>Demo Video</h3>
-<a href="https://drive.google.com/file/d/1iy8c3Wbz6XiEQv45paWlUl7trV_hFzOY/view?usp=drive_link" target="_blank">Click here to watch the demo video</a>
+<a href="https://drive.google.com/file/d/1pRRm5C99I9J84bMZ0vTM_IzL13zU40up/view?usp=drive_link" target="_blank">Click here to watch the demo video</a>
 <br>
 <br>
 
