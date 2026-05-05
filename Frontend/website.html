@@ -334,14 +334,28 @@
                 });
 
                 //check if the response is ok
+                if (!response.ok) {
+                    const errorData = await response.text();
+                    console.error('Server error:', errorData);
+                    resultText.textContent = "Error: Failed to get prediction (Status: " + response.status + ")";
+                    return;
+                }
+
                 const data = await response.json();
-                resultText.textContent = "Prediction: " + data.prediction;
-                document.getElementById("note").textContent = "Note: This is diagnosed using an AI. This is not made to replace Doctors.";
+                if (data.error) {
+                    console.error('Server error:', data.error);
+                    resultText.textContent = "Error: " + data.error;
+                } else if (data.prediction) {
+                    resultText.textContent = "Prediction: " + data.prediction;
+                    document.getElementById("note").textContent = "Note: This is diagnosed using an AI. This is not made to replace Doctors.";
+                } else {
+                    resultText.textContent = "Error: Invalid response from server";
+                }
 
                 //catch any errors
             } catch (error) {
                 console.error('Error:', error);
-                resultText.textContent = "An error occurred during prediction.";
+                resultText.textContent = "Error: Connection failed. Make sure backend server is running at http://127.0.0.1:8000";
             }
         });
     </script>

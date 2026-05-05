@@ -29,7 +29,22 @@ num_classes = len(class_names)
 
 model = DiseaseDiagnosisModel(num_classes)
 model_path = os.path.join(os.path.dirname(__file__),"..", "xray_cnn_model.pth")
-model.load_state_dict(torch.load(model_path, map_location=device))
+
+# Debug: Print the model path
+print(f"Looking for model at: {model_path}")
+print(f"Model file exists: {os.path.exists(model_path)}")
+
+if not os.path.exists(model_path):
+    print(f"ERROR: Model file not found at {model_path}")
+    raise FileNotFoundError(f"Model file not found at {model_path}")
+
+try:
+    model.load_state_dict(torch.load(model_path, map_location=device))
+    print("Model loaded successfully!")
+except Exception as e:
+    print(f"ERROR loading model: {e}")
+    raise
+
 model.to(device)    
 model.eval()  # Set the model to evaluation mode
 
@@ -41,20 +56,29 @@ transform = transforms.Compose([ # Image transformations for preprocessing
 
 @app.post("/predict/")
 async def predict_disease(file: UploadFile = File(...)):
-    # Read image file
-    image_data = await file.read() # Read the uploaded file
-    image = Image.open(io.BytesIO(image_data)).convert("RGB") # Convert to RGB
+    try:
+        # Read image file
+        image_data = await file.read() # Read the uploaded file
+        
+        if not image_data:
+            return {"error": "No image data received"}
+        
+        image = Image.open(io.BytesIO(image_data)).convert("RGB") # Convert to RGB
+        
+        # Preprocess the image
+        input_tensor = transform(image).unsqueeze(0).to(device) # Add batch dimension and move to device 
+
+        # Make prediction
+        with torch.no_grad(): # Disable gradient calculation for inference
+            outputs = model(input_tensor) # Get model outputs
+            _, predicted = torch.max(outputs, 1) # Get the index (eg: 0(normal), 1(pneumonia), 2(tuberculosis)) of the highest score
+            predicted_class = class_names[predicted.item()] # Map index to class name
+
+        return {"prediction": predicted_class} # Return the predicted class as JSON response
     
-    # Preprocess the image
-    input_tensor = transform(image).unsqueeze(0).to(device) # Add batch dimension and move to device 
-
-    # Make prediction
-    with torch.no_grad(): # Disable gradient calculation for inference
-        outputs = model(input_tensor) # Get model outputs
-        _, predicted = torch.max(outputs, 1) # Get the index (eg: 0(normal), 1(pneumonia), 2(tuberculosis)) of the highest score
-        predicted_class = class_names[predicted.item()] # Map index to class name
-
-    return {"prediction": predicted_class} # Return the predicted class as JSON response
+    except Exception as e:
+        print(f"Prediction error: {e}")
+        return {"error": f"Prediction failed: {str(e)}"}
 
 @app.get("/")
 async def root():
