@@ -3,11 +3,11 @@
 <h3>Overview</h3>
 <p>This is a web-based system designed to assist users in identifying possible diseases based on provided X-ray images. The platform provides an intuitive interface where users can input their X-rays and receive predicted health conditions along with relevant information.
 
-This project aims to demonstrate the practical application of web development concepts in healthcare-related problem solving.</p>
+This project aims to demonstrate the practical application of web development concepts in healthcare-related problem-solving.</p>
 <br>
 
 <h3>Demo Video</h3>
-<a href="https://drive.google.com/file/d/1iy8c3Wbz6XiEQv45paWlUl7trV_hFzOY/view?usp=drive_link" target="_blank">Click here to watch the demo video</a>
+<a href="https://drive.google.com/file/d/1zbci1NJjRu6IRoNpBNaBgIXmQniFk7Yu/view?usp=drive_link" target="_blank">Click here to watch the demo video</a>
 <br>
 <br>
 
